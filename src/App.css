@@ -1,0 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.App {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+ width: 600px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 800px; /* Added this to constrain the width */
+  margin: 0 auto; /* Center the controls section */
+}
+
+.color-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Allow content to wrap to next line if needed */
+}
+
+.color-input label {
+  width: 100px;
+  font-weight: bold;
+}
+
+.color-input input[type="color"] {
+  border: none;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.color-input input[type="range"] {
+  width: 200px;
+  cursor: pointer;
+}
+
+#percent {
+  width: 50px;
+  text-align: center;
+}
+
+#remove {
+  background-color: #f44336;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+#remove:hover {
+  background-color: #d32f2f;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+  color:white;
+}
+
+.gradient-type-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.gradient-type-buttons button {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f4f4f9;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.gradient-type-buttons button.selected {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.gradient-type-buttons button:hover {
+  background-color: #ddd;
+}
+
+.angle-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.angle-picker label {
+  font-weight: bold;
+}
+
+.angle-picker input[type="number"] {
+  width: 70px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.circular-slider {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: radial-gradient(circle, white 65%, #ddd 65%);
+}
+
+.circular-slider .knob {
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-40%, -40%);
+}
+
+.gradient-preview {
+  margin-top: 20px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.css-code {
+  margin-top: 20px;
+}
+
+.css-code pre {
+  background: #f4f4f9;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #4CAF50;
+  color: white;
+}
+
+select:hover {
+  background-color: #45a049;
+}
+
+select:focus {
+  outline: none;
+  border: 1px solid #4CAF50;
+}
