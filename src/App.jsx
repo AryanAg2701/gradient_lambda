@@ -2,69 +2,86 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [colors, setColors] = useState([
+  // start state for colors with two default colors
+  const [colors, selcol] = useState([
     { id: 1, value: "#ff0000", stop: 0 },
     { id: 2, value: "#0000ff", stop: 100 },
   ]);
-  const [gradientType, setGradientType] = useState("linear");
-  const [angle, setAngle] = useState(0);
 
-  const handleColorChange = (id, newValue) => {
-    setColors(
+  // start state for gradient type default is linear
+  const [gradient, setgradient] = useState("linear");
+
+  // start state for angle default is 0
+  const [angle, setangle] = useState(0);
+
+  // handle change in color input
+  const changecolor = (id, newValue) => {
+    // update color is array
+    selcol(
       colors.map((color) =>
         color.id === id ? { ...color, value: newValue } : color
       )
     );
   };
 
-  const handleStopChange = (id, newStop) => {
-    newStop = parseInt(newStop);
+  // handle change in stop position 
+  const dstopchanges = (id, newStop) => {
+    newStop = parseInt(newStop); // convert the stop value to integer
+    // update color stop
     const updatedColors = colors.map((color) =>
       color.id === id ? { ...color, stop: newStop } : color
     );
-    setColors(updatedColors);
+    selcol(updatedColors);
   };
 
-  const addColor = () => {
-    setColors([
+  // add new color
+  const add = () => {
+    selcol([
       ...colors,
       { id: colors.length + 1, value: "#ffffff", stop: 50 },
     ]);
   };
 
-  const removeColor = (id) => {
+  // remove color 
+  const delcol = (id) => {
     if (colors.length > 2) {
-      setColors(colors.filter((color) => color.id !== id));
-      colors.map((color)=>{color.id=color.id>id?color.id-1:color.id})
+      selcol(colors.filter((color) => color.id !== id));
+      // update id on deletoin
+      colors.map((color) => {
+        color.id = color.id > id ? color.id - 1 : color.id;
+      });
     }
   };
 
-  const handleMouseMove = (e) => {
-    const slider = document.getElementById("circular-slider");
-    const rect = slider.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = e.clientX - centerX;
-    const dy = e.clientY - centerY;
-    let newAngle = Math.atan2(dy, dx) * (180 / Math.PI);
-    newAngle = (newAngle + 360) % 360; // Convert to range 0-360
-    setAngle(Math.round(newAngle));
+  // handle mouse positon on circle
+  const mousemoving = (e) => {
+    const slider = document.getElementById("circular-slider"); // get the circular slider element
+    const rect = slider.getBoundingClientRect(); // get the bounding rectangle of the slider
+    const centerX = rect.left + rect.width / 2; // calculate the center X coordinate
+    const centerY = rect.top + rect.height / 2; // calculate the center Y coordinate
+    const dx = e.clientX - centerX; // calculate the difference in X coordinates
+    const dy = e.clientY - centerY; // calculate the difference in Y coordinates
+    let newangle = Math.atan2(dy, dx) * (180 / Math.PI); // calculate the angle in degrees
+    newangle = (newangle + 360) % 360; // Convert to range 0 to 360
+    setangle(Math.round(newangle)); // set new angle in integer
   };
 
-  const getGradient = () => {
-    const sortedColors = [...colors].sort((a, b) => a.stop - b.stop);
-    const colorStops = sortedColors
-      .map((color) => `${color.value} ${color.stop}%`)
+  // Generate the gradient CSS string
+  const gradientchange = () => {
+    const sortarr = [...colors].sort((a, b) => a.stop - b.stop); // sort colors by stop value
+    const stopcolor = sortarr
+      .map((color) => `${color.value} ${color.stop}%`) // create the color stops string
       .join(", ");
-    if (gradientType === "linear") {
-      return `linear-gradient(${angle}deg, ${colorStops})`;
-    } else if (gradientType === "radial") {
-      return `radial-gradient(circle, ${colorStops})`;
+    if (gradient === "linear") {
+      return `linear-gradient(${angle}deg, ${stopcolor})`; // linear gradient with angle
+    } else if (gradient === "radial") {
+      return `radial-gradient(circle, ${stopcolor})`; // radial gradient
     }
   };
 
-  const getCSSCode = () => {
-    return `background: ${getGradient()};`;
+  // finding CSS code for the gradient
+  const css = () => {
+    return `background: ${gradientchange()};`;
   };
 
   return (
@@ -78,39 +95,39 @@ function App() {
             <input
               type="color"
               value={color.value}
-              onChange={(e) => handleColorChange(color.id, e.target.value)}
+              onChange={(e) => changecolor(color.id, e.target.value)}
             />
             <input
               type="range"
               min="0"
               max="100"
               value={color.stop}
-              onChange={(e) => handleStopChange(color.id, e.target.value)}
+              onChange={(e) => dstopchanges(color.id, e.target.value)}
             />
             <div id="percent">{color.stop}%</div>
             {colors.length > 2 && (
-              <button id="remove" onClick={() => removeColor(color.id)}>
+              <button id="remove" onClick={() => delcol(color.id)}>
                 X
               </button>
             )}
           </div>
         ))}
-        <button onClick={addColor}>Add Color</button>
+        <button onClick={add}>Add Color</button>
         <div className="gradient-type-buttons">
           <button
-            className={gradientType === "linear" ? "selected" : ""}
-            onClick={() => setGradientType("linear")}
+            className={gradient === "linear" ? "selected" : ""}
+            onClick={() => setgradient("linear")}
           >
             Linear
           </button>
           <button
-            className={gradientType === "radial" ? "selected" : ""}
-            onClick={() => setGradientType("radial")}
+            className={gradient === "radial" ? "selected" : ""}
+            onClick={() => setgradient("radial")}
           >
             Radial
           </button>
         </div>
-        {gradientType === "linear" && (
+        {gradient === "linear" && (
           <div className="angle-picker">
             <label>Angle:</label>
             <input
@@ -118,18 +135,18 @@ function App() {
               min="0"
               max="360"
               value={angle}
-              onChange={(e) => setAngle(parseInt(e.target.value))}
+              onChange={(e) => setangle(parseInt(e.target.value))}
             />
             <div
               id="circular-slider"
               className="circular-slider"
-              onMouseMove={(e) => e.buttons === 1 && handleMouseMove(e)}
-              onClick={handleMouseMove}
+              onMouseMove={(e) => e.buttons === 1 && mousemoving(e)} // update angle on mouse move when mouse button is pressed
+              onClick={mousemoving} // update angle on click
             >
               <div
                 className="knob"
                 style={{
-                  transform: `rotate(${angle}deg) translate(67.5px) translate(-50%, -50%)`,
+                  transform: `rotate(${angle}deg) translate(67.5px) translate(-50%, -50%)`, // Rotate the knob to show the angle
                 }}
               ></div>
             </div>
@@ -138,11 +155,11 @@ function App() {
       </div>
       <div
         className="gradient-preview"
-        style={{ background: getGradient() }}
+        style={{ background: gradientchange() }} // apply gradient
       ></div>
       <div className="css-code">
         <h2>CSS Code</h2>
-        <pre>{getCSSCode()}</pre>
+        <pre>{css()}</pre> {/* Display CSS code */}
       </div>
     </div>
   );
