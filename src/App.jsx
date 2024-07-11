@@ -24,7 +24,7 @@ function App() {
     );
   };
 
-  // handle change in stop position 
+  // handle change in stop position
   const dstopchanges = (id, newStop) => {
     newStop = parseInt(newStop); // convert the stop value to integer
     // update color stop
@@ -36,13 +36,10 @@ function App() {
 
   // add new color
   const add = () => {
-    selcol([
-      ...colors,
-      { id: colors.length + 1, value: "#ffffff", stop: 50 },
-    ]);
+    selcol([...colors, { id: colors.length + 1, value: "#ffffff", stop: 50 }]);
   };
 
-  // remove color 
+  // remove color
   const delcol = (id) => {
     if (colors.length > 2) {
       selcol(colors.filter((color) => color.id !== id));
