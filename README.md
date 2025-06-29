@@ -1,6 +1,6 @@
 # gradient_lambda
 
-To run the rogram use node_modules and "npm run dev" in Terminal.
+To run the program use node_modules and "npm run dev" in Terminal.
 
 It is a only frontend project that gives the preview as well as the css code for customizable gradient and has various functions to make and alter it completely at will.
 
